@@ -16,21 +16,21 @@ ALGORITHMS = [
     #'sia',
     #'lbry',
     'blake2s',
-    'daggerhashimoto',
+    #'daggerhashimoto',
     'lyra2rev2',
-    'daggerhashimoto_decred',
+    #'daggerhashimoto_decred',
     #'daggerhashimoto_sia',
-    'daggerhashimoto_pascal',
+    #'daggerhashimoto_pascal',
     #'cryptonight',
     'keccak',
-    'neoscrypt',
+    #'neoscrypt',
     #'nist5',
     'cryptonightV7',
     'cryptonightV8',
     'lyra2z',
-    'x16r'
+    #'x16r'
     ]
-NHMP_PORT = 3200
+NHMP_PORT = 9200
 
 
 class ExcavatorError(Exception):
@@ -135,8 +135,14 @@ class ExcavatorServer(object):
 
     def _subscribe(self):
         region, wallet, worker = self._subscription
-        self.send_command('subscribe', [f'nhmp.{region}.nicehash.com:{NHMP_PORT}',
-                                        f'{wallet}.{worker}:x'])
+        url = f'nhmp.{region}.nicehash.com:{NHMP_PORT}'
+        self.send_command(
+            'subscribe',
+            [
+                url,
+                f'{wallet}.{worker}:x'
+            ]
+        )
 
     def stop(self):
         """Stops excavator."""
